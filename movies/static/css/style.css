@@ -1,0 +1,26 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.movie-card{
+    display:inline-block;
+    margin:10px;
+    text-align:center;
+    vertical-align:top;
+}
+
+.movie-card img{
+    border-radius:10px;
+}
+
+.movie-card:hover{
+    transform:scale(1.05);
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}

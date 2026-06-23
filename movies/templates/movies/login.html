@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-[85vh] flex items-center justify-center bg-[#0B0F19] px-4 relative overflow-hidden">
+    <div class="absolute w-[400px] h-[400px] bg-[#FF3366]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="w-full max-w-md space-y-8 bg-[#131A2C]/40 backdrop-blur-md border border-white/[0.06] p-8 rounded-2xl relative z-10 shadow-2xl">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans',sans-serif] bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">Welcome Back</h2>
+            <p class="mt-2 text-sm text-slate-400 font-light">Log in to sync your custom recommendation feed.</p>
+        </div>
+
+        <form class="mt-8 space-y-6" method="POST">
+            {% csrf_token %}
+            <div class="space-y-4 rounded-md shadow-sm">
+                {% for field in form %}
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-mono uppercase tracking-wider text-slate-400">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p class="text-xs text-[#FF3366] mt-1">{{ field.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-bold uppercase tracking-wider rounded-xl text-white bg-[#FF3366] hover:bg-[#e02454] transition-colors focus:outline-none focus:ring-4 focus:ring-[#FF3366]/20 shadow-lg shadow-[#FF3366]/20">
+                Sign In
+            </button>
+        </form>
+
+        <div class="text-center mt-4 border-t border-white/[0.04] pt-4">
+            <p class="text-xs text-slate-500">Don't have an account? <a href="{% url 'signup' %}" class="text-[#00F5D4] hover:underline font-semibold">Sign up here</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styles Django's raw native inputs cleanly into Tailwind styling rules */
+    input {
+        width: 100%;
+        background-color: #0B0F19 !important;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+        border-radius: 0.75rem !important;
+        padding: 0.5rem 0.875rem !important;
+        color: #e2e8f0 !important;
+        font-size: 0.875rem !important;
+        outline: none;
+        transition: all 0.2s;
+    }
+    input:focus { border-color: rgba(255,51,102,0.4) !important; }
+</style>
+{% endblock %}

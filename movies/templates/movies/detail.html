@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-[#0B0F19] text-slate-100 px-4 py-8 sm:px-6 lg:px-8 relative overflow-hidden">
+
+    <div class="absolute top-0 left-0 right-0 h-[60vh] bg-cover bg-center opacity-10 pointer-events-none blur-[100px] transform scale-110" style="background-image: url('{{ movie.poster_url }}');"></div>
+    <div class="absolute top-0 left-0 right-0 h-[61vh] bg-gradient-to-b from-transparent to-[#0B0F19] pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10 space-y-16">
+
+        <main class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-start pt-6">
+
+            <div class="mx-auto md:mx-0 w-[250px] sm:w-[280px] aspect-[2/3] rounded-2xl overflow-hidden bg-[#131A2C]/60 border border-white/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.6)] group relative">
+                <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="eager">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+
+            <div class="space-y-6 self-center">
+                <div class="space-y-3">
+                    <span class="text-xs font-mono tracking-widest text-[#FF3366] uppercase bg-[#FF3366]/10 px-3 py-1 rounded-md border border-[#FF3366]/20 inline-block">
+                        Cinematic Feature
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white font-['Plus_Jakarta_Sans',sans-serif] leading-tight">
+                        {{ movie.title }}
+                    </h1>
+                </div>
+
+                <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400 font-light">
+                    <span>📅 <strong class="text-slate-300">Release:</strong> {{ movie.release_date|default:"Unknown" }}</span>
+                    <span>⭐ <strong class="text-slate-300">Rating:</strong> {{ movie.vote_average|floatformat:1 }}/10</span>
+                    <span>🔥 <strong class="text-slate-300">Popularity:</strong> {{ movie.popularity|floatformat:0 }}</span>
+                    <span>🏷️ <strong class="text-slate-300">Genre Key:</strong> <span class="bg-white/5 px-2 py-0.5 rounded text-xs border border-white/10">{{ movie.genre }}</span></span>
+                </div>
+
+                <div class="h-[1px] w-full bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent"></div>
+
+                <div class="space-y-2">
+                    <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400">Overview</h3>
+                    <p class="text-slate-300 leading-relaxed max-w-3xl font-light text-base sm:text-lg">
+                        {{ movie.overview }}
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-xl bg-[#131A2C]/40 border border-white/[0.06] backdrop-blur-md max-w-md space-y-3">
+                    <h4 class="text-sm font-semibold text-white font-['Plus_Jakarta_Sans',sans-serif]">How would you rate this?</h4>
+                    <form action="{% url 'rate_movie' movie.id %}" method="POST" class="flex gap-3">
+                        {% csrf_token %}
+                        <select name="rating" required class="flex-1 bg-[#0B0F19] text-sm text-slate-200 border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-[#FF3366] transition-colors">
+                            <option value="" disabled selected>Choose a score...</option>
+                            <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                            <option value="3">⭐⭐⭐ (3/5)</option>
+                            <option value="2">⭐⭐ (2/5)</option>
+                            <option value="1">⭐ (1/5)</option>
+                        </select>
+                        <button type="submit" class="bg-[#FF3366] hover:bg-[#e02454] text-white text-xs font-bold tracking-wider uppercase px-4 py-2 rounded-lg transition-colors shadow-lg shadow-[#FF3366]/20">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <section class="space-y-6 border-t border-white/[0.06] pt-12">
+            <div class="flex items-center gap-3">
+                <div class="h-2 w-2 rounded-full bg-[#00F5D4] shadow-[0_0_10px_#00F5D4]"></div>
+                <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
+                    More Like This
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {% for rec in recommended_movies %}
+                    <a href="{% url 'movie_detail' pk=rec.pk %}" class="group block relative overflow-hidden rounded-xl bg-[#131A2C]/40 backdrop-blur-md border border-white/[0.06] p-5 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-[#00F5D4]/40 hover:bg-[#131A2C]/80">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#00F5D4]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
+                        <div class="flex flex-col justify-between h-full min-h-[70px]">
+                            <span class="text-[10px] font-mono tracking-widest text-slate-500 uppercase group-hover:text-[#00F5D4] transition-colors duration-200">
+                                Similar Dynamic
+                            </span>
+                            <h4 class="text-base font-semibold text-slate-200 group-hover:text-white transition-colors duration-200 mt-2 line-clamp-2 font-['Plus_Jakarta_Sans',sans-serif]">
+                                {{ rec.title }}
+                            </h4>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p class="text-sm text-slate-500 col-span-full font-light italic">No matching titles compiled in the similarity matrix yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}

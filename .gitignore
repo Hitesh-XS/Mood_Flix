@@ -1,0 +1,73 @@
+# ==========================================
+# 🐍 Python Caches & System Files
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================================
+# 🤖 IDEs & Code Editors (VS Code / PyCharm)
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# 📦 Virtual Environments
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
++env/
+env.bak/
+venv.bak/
+
+# ==========================================
+# 🗄️ Django Specific
+# ==========================================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static_root/
+
+# ==========================================
+# 🧠 AI / Machine Learning Caches
+# ==========================================
+catboost_info/
+.ipynb_checkpoints
+*.pkl
+movie_df.pkl
+similarity.pkl
+
+# ==========================================
+# 🔐 Security & Keys (CRITICAL)
+# ==========================================
+.env
+.env.*
+secrets.json

@@ -1,0 +1,77 @@
+<nav class="sticky top-0 z-50 bg-[#0B0F19]/80 backdrop-blur-xl border-b border-white/[0.06] px-4 py-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+
+        <div class="flex items-center justify-center w-full lg:w-auto">
+            <a href="{% url 'home' %}" class="group flex items-center gap-2.5 no-underline outline-none">
+                <div class="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#FF3366] to-[#FF6688] flex items-center justify-center shadow-[0_0_15px_rgba(255,51,102,0.3)] transform transition-transform duration-300 group-hover:scale-105">
+                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans',sans-serif] bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 group-hover:from-white group-hover:to-white transition-all duration-200">
+                    MoodFlix
+                </h2>
+            </a>
+        </div>
+
+        <div class="flex flex-wrap justify-center items-center gap-1 sm:gap-2 bg-white/[0.03] p-1.5 rounded-xl border border-white/[0.04]">
+            <a href="{% url 'home' %}" class="px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 {% if request.resolver_match.url_name == 'home' %} bg-[#FF3366] text-white shadow-[0_4px_12px_rgba(255,51,102,0.2)] {% else %} text-slate-400 hover:text-white hover:bg-white/[0.04] {% endif %}">
+                Home
+            </a>
+
+            <a href="{% url 'recommendations' %}" class="px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 {% if request.resolver_match.url_name == 'recommendations' %} bg-[#FF3366] text-white shadow-[0_4px_12px_rgba(255,51,102,0.2)] {% else %} text-slate-400 hover:text-white hover:bg-white/[0.04] {% endif %}">
+                Recommendations
+            </a>
+
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'my_ratings' %}" class="px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 {% if request.resolver_match.url_name == 'my_ratings' %} bg-[#FF3366] text-white shadow-[0_4px_12px_rgba(255,51,102,0.2)] {% else %} text-slate-400 hover:text-white hover:bg-white/[0.04] {% endif %}">
+                    My Ratings
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+
+            <div class="w-full sm:w-64 md:w-80">
+                <form method="GET" action="{% url 'search_movies' %}" class="relative flex items-center">
+                    <div class="absolute left-3.5 pointer-events-none text-slate-500">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search movies..."
+                        class="w-full bg-[#131A2C]/50 border border-white/[0.08] rounded-xl pl-10 pr-24 py-2 text-sm text-slate-200 placeholder-slate-500 font-sans tracking-wide transition-all duration-200 outline-none focus:border-[#FF3366]/40 focus:bg-[#131A2C]/80 focus:ring-4 focus:ring-[#FF3366]/5"
+                    >
+                    <button
+                        type="submit"
+                        class="absolute right-1.5 px-3 py-1 rounded-lg bg-white/[0.06] border border-white/[0.08] font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider transition-all duration-200 hover:bg-[#FF3366] hover:text-white hover:border-transparent"
+                    >
+                        Search
+                    </button>
+                </form>
+            </div>
+
+            <div class="flex items-center gap-3">
+                {% if request.user.is_authenticated %}
+                    <span class="text-[11px] font-mono text-slate-500 uppercase tracking-wider hidden xl:inline">
+                        User: <strong class="text-[#00F5D4] font-bold">{{ request.user.username }}</strong>
+                    </span>
+                    <a href="{% url 'logout' %}" class="px-3 py-1.5 rounded-lg border border-white/[0.08] font-mono text-[11px] font-bold text-slate-400 uppercase tracking-wider transition-all duration-200 hover:bg-[#FF3366] hover:text-white hover:border-transparent">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider transition-all duration-200 hover:bg-[#00F5D4] hover:text-[#0B0F19] hover:border-transparent">
+                        Login
+                    </a>
+                    <a href="{% url 'signup' %}" class="px-3 py-1.5 rounded-lg bg-[#FF3366] font-mono text-[11px] font-bold text-white uppercase tracking-wider transition-all duration-200 hover:bg-[#e02454] shadow-md shadow-[#FF3366]/10">
+                        Register
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</nav>

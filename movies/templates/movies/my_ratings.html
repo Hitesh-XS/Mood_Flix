@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-[#0B0F19] text-slate-100 px-4 py-10 sm:px-6 lg:px-8 relative">
+    <div class="max-w-6xl mx-auto space-y-8">
+
+        <div class="flex items-center justify-between border-b border-white/[0.04] pb-4">
+            <div class="flex items-center gap-3">
+                <div class="h-2 w-2 rounded-full bg-[#FF3366] shadow-[0_0_10px_#FF3366]"></div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
+                    My Rated Movies
+                </h1>
+            </div>
+            <a href="/movies/static" class="text-xs font-mono text-slate-400 hover:text-white transition-colors">← Back Home</a>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            {% for item in user_ratings %}
+                <a href="{% url 'movie_detail' pk=item.movie.pk %}" class="group block relative overflow-hidden rounded-xl bg-[#131A2C]/40 border border-white/[0.06] p-4 transition-all duration-300 hover:-translate-y-1 hover:bg-[#131A2C]/80">
+                    <div class="aspect-[2/3] w-full rounded-lg overflow-hidden bg-slate-900">
+                        <img src="{{ item.movie.poster_url }}" alt="{{ item.movie.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-sm font-semibold text-slate-200 group-hover:text-white mt-3 line-clamp-1">{{ item.movie.title }}</h4>
+                    <div class="flex items-center justify-between mt-2 text-xs font-mono">
+                        <span class="text-slate-500">Your Rating:</span>
+                        <span class="text-[#FF3366] font-bold">⭐ {{ item.rating|floatformat:0 }}/5</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="text-sm text-slate-500 italic col-span-full font-light">You haven't rated any movies yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
