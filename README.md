@@ -29,11 +29,4 @@ MoodFlix is a secure, personalized web application that goes beyond generic "Top
 
 ---
 
-## 🚀 Local Installation & Setup
 
-Want to run MoodFlix on your own machine? Follow these steps:
-
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/yourusername/Niyantrak.git](https://github.com/yourusername/Niyantrak.git)
-cd Niyantrak
