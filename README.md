@@ -22,7 +22,7 @@ MoodFlix is a secure, personalized web application that goes beyond generic "Top
 ## 🛠️ Technology Stack
 
 * **Backend:** Python, Django 6.0
-* **Machine Learning:** Scikit-learn (TF-IDF, Cosine Similarity), Pandas, Pickle
+* **Machine Learning:** Scikit-learn (TF-IDF, Cosine Similarity), Pandas
 * **Database:** SQLite (Development)
 * **Frontend:** HTML5, Tailwind CSS (Utility-first styling)
 * **Environment:** `python-dotenv` for API & Secret Key security
