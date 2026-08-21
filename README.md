@@ -1,4 +1,4 @@
-# 🎬 MoodFlix: AI-Driven Movie Recommendation Platform
+#  MoodFlix: AI-Driven Movie Recommendation Platform
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![Django](https://img.shields.io/badge/Django-6.0-092E20.svg)
