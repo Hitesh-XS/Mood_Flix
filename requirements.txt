@@ -17,3 +17,6 @@ numpy
 scipy
 nltk
 
+# Database & Deployment Tools
+dj-database-url
+psycopg2-binary
