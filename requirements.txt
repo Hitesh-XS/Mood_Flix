@@ -1,7 +1,19 @@
-asgiref==3.11.1
+# Core Django & Server
 Django==6.0.5
+asgiref==3.11.1
 sqlparse==0.5.5
 tzdata==2026.2
-python-dotenv
+
+# APIs, Networking & Environment
 djangorestframework
+python-dotenv
+django-cors-headers
+requests
+
+# Data Science & Machine Learning
 pandas
+scikit-learn
+numpy
+scipy
+nltk
+
