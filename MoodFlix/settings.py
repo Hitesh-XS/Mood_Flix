@@ -54,7 +54,7 @@ ROOT_URLCONF = 'MoodFlix.urls'
 # Templates
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates', 
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -69,8 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MoodFlix.wsgi.application'
 
-from django.core.management import call_command
-
 # ==========================================
 # DATABASE CONFIGURATION
 # ==========================================
@@ -82,11 +80,10 @@ if os.getenv('DATABASE_URL'):
             conn_max_age=600,
         )
     }
-# 2. If running on Vercel without DATABASE_URL, copy SQLite to /tmp & run migrations
+# 2. If running on Vercel without DATABASE_URL, copy SQLite to /tmp
 elif os.getenv('VERCEL'):
     db_path = Path('/tmp/db.sqlite3')
     
-    # If starting fresh in /tmp, copy over existing DB or create and migrate
     if not db_path.exists():
         if (BASE_DIR / 'db.sqlite3').exists():
             shutil.copyfile(BASE_DIR / 'db.sqlite3', db_path)
@@ -97,13 +94,6 @@ elif os.getenv('VERCEL'):
             'NAME': db_path,
         }
     }
-
-    # Automatically run migrations in /tmp if tables like auth_user are missing
-    try:
-        call_command('migrate', interactive=False)
-    except Exception as e:
-        print(f"Migration on startup error: {e}")
-
 # 3. Default local SQLite configuration
 else:
     DATABASES = {
