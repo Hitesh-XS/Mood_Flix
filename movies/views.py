@@ -7,6 +7,7 @@ from .models import Movie
 from recommendations.models import Rating
 from recommendations.services.recommender import recommend, recommend_from_recent_five
 
+
 @login_required(login_url='login')
 def home(request):
     recommended_movies = []
@@ -37,6 +38,7 @@ def home(request):
         }
     )
 
+
 def movie_detail(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
 
@@ -56,6 +58,7 @@ def movie_detail(request, pk):
             "recommended_movies": recommended_movies
         }
     )
+
 
 @login_required(login_url='login')
 def search_movies(request):
@@ -88,19 +91,26 @@ def my_ratings(request):
         }
     )
 
+
 @login_required(login_url='login')
 def recommendations_view(request):
     recommended_movies = []
 
-    # Pull a larger mix of recommendations for this dedicated page
+    # Pull a larger mix of recommendations for this dedicated page based on recent ratings
     recommended_titles = recommend_from_recent_five(request.user, movies_per_source=4)
 
-    # Fallback if they don't have enough recent ratings
+    # Fallback for new users with no ratings: pick top trending movies as default sources
     if not recommended_titles:
-        recommended_titles = recommend(top_n=20, user=request.user)
+        trending_seed = Movie.objects.order_by("-popularity").first()
+        if trending_seed:
+            recommended_titles = recommend(trending_seed.title, top_n=20, user=request.user)
 
     if recommended_titles:
         recommended_movies = Movie.objects.filter(title__in=recommended_titles)
+
+    # Final safety check: load overall trending if no similarity list returned
+    if not recommended_movies:
+        recommended_movies = Movie.objects.order_by("-popularity")[:20]
 
     return render(
         request,
@@ -111,7 +121,6 @@ def recommendations_view(request):
     )
 
 
-
 def signup_view(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -120,11 +129,12 @@ def signup_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('login') # Forces them to log in manually after sign up
+            return redirect('login')
     else:
         form = UserCreationForm()
 
     return render(request, 'movies/signup.html', {'form': form})
+
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -143,6 +153,7 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, 'movies/login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
